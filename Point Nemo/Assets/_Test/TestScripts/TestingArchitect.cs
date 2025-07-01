@@ -23,15 +23,34 @@ namespace TESTING
         {
             ds = DialogueSystem.instance;
             architect = new TextArchitect(ds.dialogueContainer.dialogueText);
-            architect.buildMethod = TextArchitect.BuildMethod.instant;
+            architect.buildMethod = TextArchitect.BuildMethod.typewriter;
+            architect.speed = 0.5f;
            
         }
 
         // Update is called once per frame
         void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Space))
-                architect.Build(lines[Random.Range(0,lines.Length)]);
+            string longLine = "very very very long line needed to test this, its not supposed to make sense its just here to be loooooooooooooooooooooooong and test if this code is working. Adding more stuff to make it even longer, add more its very greedy.";
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if(architect.isBuilding)
+                {
+                    if(!architect.hurryUp)
+                        architect.hurryUp = true;
+                    else
+                        architect.ForceComplete();
+                }
+                else
+                    architect.Build(longLine);
+                //architect.Build(lines[Random.Range(0, lines.Length)]);
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                architect.Append(longLine);
+                //architect.Append(lines[Random.Range(0, lines.Length)]);
+
+            }
           
         }
     }

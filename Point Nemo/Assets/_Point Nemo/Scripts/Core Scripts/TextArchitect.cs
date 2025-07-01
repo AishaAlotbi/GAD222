@@ -95,6 +95,24 @@ public class TextArchitect
     private void OnComplete()//runs when build process is done
     {
         buildProcess = null;
+        hurryUp = false;
+    }
+
+    public void ForceComplete() //used to force full text when skipping
+    {
+        switch (buildMethod)
+        {
+            case BuildMethod.typewriter:
+                tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
+                break;
+            case BuildMethod.fade:
+
+                break;
+        }
+
+        Stop();
+        OnComplete();
+
     }
 
     private void Prepare()//prepars build method 
@@ -124,7 +142,18 @@ public class TextArchitect
 
     private void Prepare_Typewriter() //typewriter text effct
     {
+        tmpro.color = tmpro.color;
+        tmpro.maxVisibleCharacters = 0;
+        tmpro.text = preText;
 
+        if(preText != "")
+        {
+            tmpro.ForceMeshUpdate();
+            tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
+        }
+
+        tmpro.text += targetText;
+        tmpro.ForceMeshUpdate();
     }
 
     private void Prepare_Fade() //fade text effect
@@ -134,7 +163,12 @@ public class TextArchitect
 
     private IEnumerator Build_Typewriter()
     {
-        yield return null;
+        while(tmpro.maxVisibleCharacters < tmpro.textInfo.characterCount)
+        {
+            tmpro.maxVisibleCharacters += hurryUp ? charactersPerCycle * 5 : charactersPerCycle;
+            yield return new WaitForSeconds(0.015f / speed);
+
+        }
     }
 
     private IEnumerator Build_Fade()
