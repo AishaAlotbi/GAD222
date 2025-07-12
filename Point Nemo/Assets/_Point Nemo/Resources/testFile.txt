@@ -1,0 +1,8 @@
+Needle: The creature looks up at you expectantly
+
+Narrator: You are unsure of what it wants, it wags its tail.
+
+Choice:
+
+1- Pet Needle
+2- Ignore Needle
