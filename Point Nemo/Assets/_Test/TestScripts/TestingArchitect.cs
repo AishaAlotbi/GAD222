@@ -1,4 +1,5 @@
 using UnityEngine;
+using DIALOGUE;
 
 namespace TESTING
 {

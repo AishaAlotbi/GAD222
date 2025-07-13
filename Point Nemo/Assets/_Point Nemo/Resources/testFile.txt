@@ -1,8 +1,8 @@
-Needle: The creature looks up at you expectantly
+Needle "Hello!" list(items -f long), playSong("IntroSong" -v 1)
 
-Narrator: You are unsure of what it wants, it wags its tail.
+setScene("Classroom" -s 5.5)
 
-Choice:
+Narrator "You can not quite understand \"why it looks at you\" like that."
 
-1- Pet Needle
-2- Ignore Needle
+Narrator "The creature \"stares at you\" blinking its eyes." playSong(End, -p 0.5), list(players), saveGame(1 -g all -f simple)
+
