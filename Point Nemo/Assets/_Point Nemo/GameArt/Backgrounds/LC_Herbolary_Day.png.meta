@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      LC_Herbolary_Day_0: -7156915699873820630
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

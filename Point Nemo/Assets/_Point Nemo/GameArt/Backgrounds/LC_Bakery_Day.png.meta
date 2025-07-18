@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      LC_Bakery_Day_0: -3571649722892752022
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

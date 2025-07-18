@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      LC_LeatherShop_Winter_0: -2772262404461712173
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
