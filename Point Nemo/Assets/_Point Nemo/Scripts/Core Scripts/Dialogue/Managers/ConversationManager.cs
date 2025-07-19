@@ -14,21 +14,35 @@ namespace DIALOGUE
 
         private TextArchitect architect = null;
         private bool userPrompt = false;
+
+        public Conversation conversation => (conversationQueue.IsEmpty() ? null : conversationQueue.top);
+
+        private ConversationQueue conversationQueue;
         public ConversationManager(TextArchitect architect)
         {
             this.architect = architect;
             dialogueSystem.onUserPrompt_Next += OnUserPrompt_Next;
+
+            conversationQueue = new ConversationQueue();
         }
+
+        public void Enqueue(Conversation conversation) => conversationQueue.Enqueue(conversation);
+        public void EnqueuePriority(Conversation conversation) => conversationQueue.EnqueuePriority(conversation);
 
         private void OnUserPrompt_Next()
         {
             userPrompt = true;
         }
 
-        public void StartConversation(List<string> conversation)
+        public Coroutine StartConversation(Conversation conversation)
         {
             StopConversation();
-            process = dialogueSystem.StartCoroutine(RunningConversation(conversation));
+
+            Enqueue(conversation);
+
+            process = dialogueSystem.StartCoroutine(RunningConversation());
+
+            return process;
         }
        
         public void StopConversation()
@@ -40,14 +54,20 @@ namespace DIALOGUE
             process = null;
 
         }
-        IEnumerator RunningConversation(List<string> conversation)
+        IEnumerator RunningConversation()
         {
-            for(int i = 0; i < conversation.Count; i++)
+            while(!conversationQueue.IsEmpty())
             {
-                if (string.IsNullOrWhiteSpace(conversation[i])) //dont run logic on or show blank lines
-                    continue;
+                Conversation currentConversation = conversation;
+                string rawLine = currentConversation.CurrentLine();
 
-                DIALOGUE_LINE line = DialogueParser.Parse(conversation[i]);
+                if (string.IsNullOrWhiteSpace(rawLine)) //dont run logic on or show blank lines
+                {
+                    TryAdvanceConversation(currentConversation);
+                    continue;
+                }  
+
+                DIALOGUE_LINE line = DialogueParser.Parse(rawLine);
 
                 //Show Dialogue
                 if (line.hasDialogue)
@@ -55,9 +75,21 @@ namespace DIALOGUE
                 
                 //Run any Commands
                 if (line.hasCommands)
-                    yield return Line_RunCommands(line);  
+                    yield return Line_RunCommands(line);
+
+                TryAdvanceConversation(currentConversation);
                 
             }
+
+            process = null;
+        }
+
+        private void TryAdvanceConversation(Conversation conversation)
+        {
+            conversation.IncrementProgress();
+            if (conversation.HadReachedEnd())
+                conversationQueue.Dequeue();
+
         }
 
         IEnumerator Line_RunDialogue(DIALOGUE_LINE line)

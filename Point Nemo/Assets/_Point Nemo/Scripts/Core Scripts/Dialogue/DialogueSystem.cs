@@ -8,7 +8,7 @@ namespace DIALOGUE
     public class DialogueSystem : MonoBehaviour
     {
         public DialogueContainer dialogueContainer = new DialogueContainer();
-        private ConversationManager conversationManager; 
+        public ConversationManager conversationManager { get; private set; } 
         private TextArchitect architect;
 
         public static DialogueSystem instance;
@@ -55,15 +55,24 @@ namespace DIALOGUE
 
         }
         public void HideSpeakerName() => dialogueContainer.nameContainer.Hide();
-        public void Say(string speaker, string dialogue)
+        public Coroutine Say(string speaker, string dialogue)
         {
             List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
-            Say(conversation);
+            return Say(conversation);
         }
 
-        public void Say(List<string> conversation)
+        public Coroutine Say(List<string> lines)
         {
-            conversationManager.StartConversation(conversation);
+            Conversation conversation = new Conversation(lines);
+            return conversationManager.StartConversation(conversation);
         }
+
+        public Coroutine Say(Conversation conversation)
+        {
+            return conversationManager.StartConversation(conversation);
+        }
+       
+        
+        
     }
 }
