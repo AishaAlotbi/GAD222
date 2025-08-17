@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Test Ver/Prototype Scenes/Cabin Scene.unity
-    guid: 497912df10dcfb94384caf8e005e4784
+    path: Assets/_Point Nemo/Scenes/MainMenu.unity
+    guid: fd87b2c0fecdcec45ac6bf7e8866f6d1
+  - enabled: 1
+    path: Assets/_Point Nemo/Scenes/PointNemoGame.unity
+    guid: 66913f05cf4ec514ba78ace304655807
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
