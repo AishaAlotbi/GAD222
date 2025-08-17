@@ -16,6 +16,11 @@ public class RuntimeDialogueNode
     public string DialogueText;
     public List<ChoiceData> Choices = new List<ChoiceData>();
     public string NextNodeID;
+
+    public string BackgroundName;
+    public string CharacterName;
+    public string CharacterExpression;
+    public string CharacterPosition;
 }
 
 [Serializable]

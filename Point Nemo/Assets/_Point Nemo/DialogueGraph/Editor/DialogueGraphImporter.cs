@@ -1,6 +1,7 @@
 using Codice.CM.Common.Tree;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Unity.GraphToolkit.Editor;
 using UnityEditor.AssetImporters;
@@ -45,7 +46,7 @@ public class DialogueGraphImporter : ScriptedImporter
                 ProcessChoiceNode(choiceNode, runtimeNode, nodeIDMap);
             }
 
-            runtimeGraph.AllNodes.Add(runtimeNode);
+                runtimeGraph.AllNodes.Add(runtimeNode);
         }
 
         ctx.AddObjectToAsset("Runtime", runtimeGraph);
@@ -56,6 +57,11 @@ public class DialogueGraphImporter : ScriptedImporter
     {
         runtimeNode.SpeakerName = GetPortValue<string>(node.GetInputPortByName("Speaker"));
         runtimeNode.DialogueText = GetPortValue<string>(node.GetInputPortByName("Dialogue"));
+
+        runtimeNode.BackgroundName = GetPortValue<string>(node.GetInputPortByName("Background"));
+        runtimeNode.CharacterName = GetPortValue<string>(node.GetInputPortByName("CharacterName"));
+        runtimeNode.CharacterExpression = GetPortValue<string>(node.GetInputPortByName("Expression"));
+        runtimeNode.CharacterPosition = GetPortValue<string>(node.GetInputPortByName("Position"));
 
         var nextNodePort = node.GetOutputPortByName("out")?.firstConnectedPort;
         if (nextNodePort != null)
@@ -83,6 +89,7 @@ public class DialogueGraphImporter : ScriptedImporter
             runtimeNode.Choices.Add(choiceData);
         }
     }
+
 
     private T GetPortValue<T>(IPort port)
     {

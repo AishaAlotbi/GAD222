@@ -30,6 +30,13 @@ public class DialogueNode : Node
 
         context.AddInputPort<string>("Speaker").Build();
         context.AddInputPort<string>("Dialogue").Build();
+
+        //Visuals
+        context.AddInputPort<string>("Background").Build();
+        context.AddInputPort<string>("CharacterName").Build();
+        context.AddInputPort<string>("Expression").Build();
+        context.AddInputPort<string>("Position").Build();
+
     }
 }
 
@@ -61,7 +68,6 @@ public class ChoiceNode : Node
     }
 
 }
-
 
 
 
